@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -96,7 +95,7 @@ public class DebugTest : MonoBehaviour
 
         Debug.Log($"{numbersByName["Four"]} is written as Four");
 
-        
+
     }
 
     // Update is called once per frame
@@ -105,17 +104,17 @@ public class DebugTest : MonoBehaviour
 
     }
 
-  
-/// <summary>
-/// Output fibonacci number 
-/// </summary>
-/// <param name="count">Amount of numbers to be outputted</param>
+
+    /// <summary>
+    /// Output fibonacci number 
+    /// </summary>
+    /// <param name="count">Amount of numbers to be outputted</param>
     private List<int> WriteFibonacciNumbers(int count)
     {
         List<int> fibonacciNumbers = new List<int> { 1, 1 };
 
         //Add fibonacci numbers to the list untill the list contains the required amount of numbers
-        while(fibonacciNumbers.Count<count)
+        while (fibonacciNumbers.Count < count)
         {
             var previous = fibonacciNumbers[fibonacciNumbers.Count - 1];
             var previous2 = fibonacciNumbers[fibonacciNumbers.Count - 2];

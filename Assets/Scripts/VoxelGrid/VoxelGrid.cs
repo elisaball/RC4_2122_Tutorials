@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class VoxelGrid
@@ -45,7 +43,7 @@ public class VoxelGrid
     #region public function
     public Voxel GetVoxelByIndex(Vector3Int index)
     {
-        if(!Util.CheckInBounds(GridDimensions,index)||_voxels[index.x, index.y, index.z]==null)
+        if (!Util.CheckInBounds(GridDimensions, index) || _voxels[index.x, index.y, index.z] == null)
         {
             Debug.Log($"A Voxel at {index} doesn't exist");
             return null;

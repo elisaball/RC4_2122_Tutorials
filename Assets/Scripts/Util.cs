@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -16,9 +15,9 @@ public static class Util
     };
     public static bool CheckInBounds(Vector3Int gridDimensions, Vector3Int index)
     {
-        if (index.x<0 || index.x >= gridDimensions.x) return false;
-        if (index.y<0 || index.y >= gridDimensions.y) return false;
-        if (index.z<0 || index.z >= gridDimensions.z) return false;
+        if (index.x < 0 || index.x >= gridDimensions.x) return false;
+        if (index.y < 0 || index.y >= gridDimensions.y) return false;
+        if (index.z < 0 || index.z >= gridDimensions.z) return false;
 
         return true;
     }

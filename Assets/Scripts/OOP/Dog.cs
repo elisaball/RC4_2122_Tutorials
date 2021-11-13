@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public enum Breed { Chihuahua, Maltese, Pomeranioan, Poodle, Pug, Labrador, GermanShepherd, GoldenRetriever }

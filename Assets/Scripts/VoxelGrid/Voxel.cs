@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,7 +16,7 @@ public class Voxel
         }
         set
         {
-            if(_goVoxelTrigger!=null)
+            if (_goVoxelTrigger != null)
             {
                 MeshRenderer renderer = _goVoxelTrigger.GetComponent<MeshRenderer>();
                 renderer.enabled = value;
@@ -40,7 +39,7 @@ public class Voxel
     {
         Index = new Vector3Int(x, y, z);
         _grid = grid;
-        
+
         CreateGameobject();
         Alive = true;
     }

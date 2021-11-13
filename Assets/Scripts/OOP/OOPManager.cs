@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,12 +13,12 @@ public class OOPManager : MonoBehaviour
         myFirstDog.Bark(5);
 
 
-        _dogs = new Dictionary<string,Dog>();
+        _dogs = new Dictionary<string, Dog>();
 
-        _dogs.Add("Toby",new Dog("Toby",2004,Breed.Labrador));
-        _dogs.Add("Fifi",new Dog("Fifi", 2005, Breed.Labrador));
+        _dogs.Add("Toby", new Dog("Toby", 2004, Breed.Labrador));
+        _dogs.Add("Fifi", new Dog("Fifi", 2005, Breed.Labrador));
 
-        _dogs.Add("Ivy",new Dog("Ivy", 2008, Breed.Labrador, _dogs["Toby"], _dogs["Fifi"]));
+        _dogs.Add("Ivy", new Dog("Ivy", 2008, Breed.Labrador, _dogs["Toby"], _dogs["Fifi"]));
 
         _dogs.Add("Lewis", new Dog("Lewis", 2009, Breed.Labrador));
 

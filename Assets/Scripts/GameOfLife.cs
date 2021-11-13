@@ -32,6 +32,9 @@ public class GameOfLife : MonoBehaviour
                 }
             }
         }
+
+
+        StartCoroutine("AutomaticGOL");                                     //coroutine implies that it works over the time, so even if it is called once (in start) it keeps running
     }
 
     // Update is called once per frame
@@ -112,6 +115,17 @@ public class GameOfLife : MonoBehaviour
                     }
                 }
             }
+        }
+    }
+
+
+
+    IEnumerator AutomaticGOL()                                                  //coroutine creation 
+    {
+        for (; ; )
+        {
+            DoGameOfLifeIteration();
+            yield return new WaitForSeconds(1f);
         }
     }
 }
