@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class GameOfLife : MonoBehaviour
 {
-
+   
     [SerializeField]
     private Vector3Int _gridDimensions = new Vector3Int(10, 10, 10);       //declaring and initializing the DIMENSIONS for the grid
 
     private VoxelGrid _grid;                                               //declaring the GRID ITSELF
     // Start is called before the first frame update
     void Start()
-    {
+    {   
         // we create the voxelgrid-initializing the _grid:
         _grid = new VoxelGrid(_gridDimensions);
-
+      
         // for every voxel in the grid:
         for (int x = 0; x < _gridDimensions.x; x++)
         {
@@ -70,7 +70,7 @@ public class GameOfLife : MonoBehaviour
     }
 
     private void DoGameOfLifeIteration()
-    {
+    { 
         //for each voxel in the grid
         for (int x = 0; x < _gridDimensions.x; x++)
         {
@@ -84,7 +84,7 @@ public class GameOfLife : MonoBehaviour
                     List<Voxel> neighbours = currentVoxel.GetNeighbourList();   //for the specific voxel get the neighbours and create a list where to store them
                     int numberOfLivingNeighbours = 0;
                     foreach (Voxel neighbour in neighbours)                     //for each voxel in the list of neighbours:
-                    {
+                    {                                                       
                         if (neighbour.Alive)                                    //if the neighbour is alive add it to the list of neighbours.
                         {
                             numberOfLivingNeighbours++;
