@@ -6,11 +6,11 @@ public class GameOfLife : MonoBehaviour
 {
 
     [SerializeField]
-    private Vector3Int _gridDimensions = new Vector3Int(10, 10, 10);       //declaring and initializing the DIMENSIONS for the grid
+    private Vector3Int _gridDimensions = new Vector3Int(20, 20, 20);       //declaring and initializing the DIMENSIONS for the grid
 
     private VoxelGrid _grid;                                               //declaring the GRID ITSELF
 
-    private int _currentYLayer;
+    private int _currentYLayer=0;
     
     // Start is called before the first frame update
     void Start()
@@ -40,7 +40,7 @@ public class GameOfLife : MonoBehaviour
             {
                 Vector3Int voxelIndex = new Vector3Int(x, 0, z);                                //we create the sets of coordinates, y=0 because we want to work layer by layer
                 Voxel currentVoxel = _grid.GetVoxelByIndex(voxelIndex);
-                if (Random.value < 0.8f)                                                        //setting a random number of voxels as alive
+                if (Random.value < 0.5f)                                                        //setting a random number of voxels as alive
                 {
                     currentVoxel.Alive = true;
                 }
@@ -83,6 +83,8 @@ public class GameOfLife : MonoBehaviour
     {
         if (GUI.Button(new Rect(10, 70, 50, 30), "Play !"))
         {
+            CopyTheBottomLayerToTopOne(_currentYLayer);
+            _currentYLayer = _currentYLayer + 1;
             DoGameOfLifeIteration(_currentYLayer);
         }
     }
@@ -97,7 +99,7 @@ public class GameOfLife : MonoBehaviour
                 Vector3Int voxelIndex = new Vector3Int(x, y, z);                     //unity takes the coordinates of the current iteration made from the loop section and creates a vector
                 Voxel currentVoxel = _grid.GetVoxelByIndex(voxelIndex);              //in the variable typed Voxel find the voxel in those specific coordinates
 
-                List<Voxel> neighbours = currentVoxel.GetNeighbourList();            //for the specific voxel get the neighbours and create a list where to store them
+                /*List<Voxel> neighbours = currentVoxel.GetNeighbourList();            //for the specific voxel get the neighbours and create a list where to store them
                 int numberOfLivingNeighbours = 0;
                 foreach (Voxel neighbour in neighbours)                              //for each voxel in the list of neighbours:
                 {
@@ -105,25 +107,42 @@ public class GameOfLife : MonoBehaviour
                     {                                                                                //if the y value of neighbor is the same of the current voxel the neighbor is kept
                         numberOfLivingNeighbours++;
                     }
-                }
+                }*/
 
-                if (currentVoxel.Alive)                                              //IF the current voxel is alive and if the number of neighbour is 2 or 3 make it alive, otherwise make it dead.
+                int numberOfLivingNeighbours = 0;
+                for (int i = x-1; i < x+2; i++)
                 {
-                    if (numberOfLivingNeighbours == 2 || numberOfLivingNeighbours == 3)
+                    for (int j = z-1; j < z+2; j++)
                     {
-                        currentVoxel.Alive = true;
+                        if (!((i<0 || j<0) || (i>= _gridDimensions.x || j>= _gridDimensions.z)))
+                        {
+                            Vector3Int neighborIndex = new Vector3Int(i, y, z);                     //unity takes the coordinates of the current iteration made from the loop section and creates a vector
+                            Voxel neighbor = _grid.GetVoxelByIndex(neighborIndex);
+                            if (neighbor.Alive && !neighborIndex.Equals(voxelIndex))
+                            {
+                                numberOfLivingNeighbours++;
+                            }
+                        }
                     }
-                    else
+                }
+                Debug.Log($"neighbours = {numberOfLivingNeighbours}, layer = {y}");
+
+                if (currentVoxel.Alive)
+                {
+                    if (numberOfLivingNeighbours < 2)
                     {
                         currentVoxel.Alive = false;
                     }
-
-                }                                                                   //OTHERWISE (the current voxel is dead) and if the number of neighbours is 3, make the current voxel alive.
+                    if (numberOfLivingNeighbours > 3)
+                    {
+                        currentVoxel.Alive = false;
+                    }
+                }
                 else
                 {
                     if (numberOfLivingNeighbours == 3)
                     {
-                        currentVoxel.Alive = true;                                  //in all the other cases the voxel stays DEAD.
+                        currentVoxel.Alive = true;
                     }
                 }
             }
@@ -135,12 +154,12 @@ public class GameOfLife : MonoBehaviour
 
     IEnumerator AutomaticGOL()                                                          //coroutine creation 
     {
-        for (int y = 1; y < _gridDimensions.y; y++)                                   //for every y layer:
+        for (int y = 0; y < _gridDimensions.y; y++)                                   //for every y layer:
         {
             _currentYLayer = y;
-            CopyTheBottomLayerToTopOne(y-1);                                              //we copy the bottom one,
-            DoGameOfLifeIteration(y);                                                    //we play GOL just on the layer above not to change the previous layer,
-            yield return new WaitForSeconds(1f);                                        //every second.
+            CopyTheBottomLayerToTopOne(_currentYLayer);                                              //we copy the bottom one,
+            DoGameOfLifeIteration(++_currentYLayer);                                                    //we play GOL just on the layer above not to change the previous layer,
+            yield return new WaitForSeconds(0.5f);                                      //every second.
         }
     }
 
